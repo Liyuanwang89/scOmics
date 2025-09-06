@@ -22,10 +22,10 @@ colpalettes <- unique(c(
 ))
 
 # Set working directory
-setwd("/home/wangliyuan/scRNA_datas/scRNA_integ_all_202204/combine_merge")
+setwd("/home/wangliyuan/scRNA_datas/combine_merge")
 
 # Define a function to process each dataset
-process_seurat_object <- function(data.dir, project.name) {
+process_obj <- function(data.dir, project.name) {
   # Read data and create Seurat object
   data <- Read10X(data.dir = data.dir)
   obj <- CreateSeuratObject(
@@ -40,7 +40,12 @@ process_seurat_object <- function(data.dir, project.name) {
   
   # Subset data (fixed the subset issue from original code)
   obj <- subset(obj, subset = nCount_RNA > 1000 & nFeature_RNA > 500 & percent.mt < 20)
-  
+  obj <- runDecontX(obj)  
+  obj <- doubletFinder_v3(obj, 
+                                   PCs = 1:50, 
+                                   pN = 0.25, 
+                                   pK = 0.09, 
+                                   nExp = round(ncol(obj) * 0.05))
   # Normalization and feature selection
   obj <- NormalizeData(object = obj, verbose = FALSE)
   obj <- FindVariableFeatures(
@@ -87,7 +92,7 @@ for (tissue in tissues) {
     # Check if directory exists before processing
     if (dir.exists(path)) {
       cat("Processing:", proj_name, "\n")
-      obj <- process_seurat_object(path, proj_name)
+      obj <- process_obj(path, proj_name)
       all_objects[[proj_name]] <- obj
     }
   }
