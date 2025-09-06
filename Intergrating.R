@@ -28,8 +28,8 @@ geneAnnotation1 <- createGeneAnnotation(TxDb = TxDb.Sscrofa.UCSC.susScr11.refGen
 addArchRChrPrefix(chrPrefix = FALSE)
 
 #建立路径
-setwd("/home/wangliyuan/scATAC/integ_all_inall")
-integ_all <- loadArchRProject(path = "/home/wangliyuan/scATAC/integ_all_inall")
+setwd("/home/integ_all_inall")
+integ_all <- loadArchRProject(path = "/home/integ_all_inall")
 
 options(future.globals.maxSize = 3000 * 1024^2)
 addArchRThreads(threads = 40)

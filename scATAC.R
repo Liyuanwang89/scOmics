@@ -6,14 +6,14 @@ library(scran)
 
 # 1. 初始化设置 ------------------------------------------------------------
 # 加载参考基因组
-integ_liver <- loadArchRProject(path = "/vol1/agis/tangzhonglin_group/wangliyuan/scRNA_scATAC/1Digest_liver/1Digest_liver_ATAC")
+integ_liver <- loadArchRProject(path = "/vol1/1Digest_liver/1Digest_liver_ATAC")
 genomeAnnotation1 <- getGenomeAnnotation(ArchRProj = integ_liver)
 geneAnnotation1 <- createGeneAnnotation(TxDb = TxDb.Sscrofa.UCSC.susScr11.refGene, 
                                       OrgDb = org.Ss.eg.db)
 addArchRChrPrefix(chrPrefix = FALSE)
 
 # 设置工作目录
-setwd("/vol1/agis/tangzhonglin_group/wangliyuan/scRNA_scATAC/integ_all_inall")
+setwd("/vol1/integ_all_inall")
 
 # 2. 数据输入 --------------------------------------------------------------
 sample_info <- list(
